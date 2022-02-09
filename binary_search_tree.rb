@@ -1,4 +1,4 @@
-require_relative "node"
+require_relative "tree_node"
 
 class BinarySearchTree
   attr_accessor :root
@@ -8,7 +8,7 @@ class BinarySearchTree
   end
 
   def add_node(element)
-    new_node = Node.new(element)
+    new_node = TreeNode.new(element)
     if @root.nil?
       @root = new_node
     else
@@ -187,18 +187,18 @@ class BinarySearchTree
     input = File.read("bst.txt").split("->").map(&:to_i)
     unless input.first == -1
       queue = []
-      @root = Node.new(input.first)
+      @root = TreeNode.new(input.first)
       node = @root
       itr = 1
       queue << node
       until itr >= input.size
         node = queue.shift
         unless input[itr] == -1
-          node.left_node = Node.new(input[itr])
+          node.left_node = TreeNode.new(input[itr])
           queue << node.left_node
         end
         unless input[itr + 1] == -1
-          node.right_node = Node.new(input[itr + 1])
+          node.right_node = TreeNode.new(input[itr + 1])
           queue << node.right_node
         end
         itr += 2
@@ -206,4 +206,3 @@ class BinarySearchTree
     end
   end
 end
-
