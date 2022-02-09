@@ -10,6 +10,17 @@ dash = ''
   dash << "-"
 end 
 
+puts star
+puts "Do you want to load the bst from the file"
+puts "Enter y or Y for yes otherwise it will be considered no"
+choice = gets.chomp
+if choice.upcase == "Y"
+  puts "Loading the BST"
+  tree.load_bst
+  puts "BST is loaded with the file data"
+end
+puts star
+
 loop do
   puts star
   puts "Binary Search Tree User Interface"
@@ -19,11 +30,15 @@ loop do
   puts "4. Print Inorder, postorder, level order and preorder traversal"
   puts "5. Search an Element"
   puts "6. Remove an Element"
+  puts "7. Print all the paths"
   puts "Enter quit to stop the program"
   puts star
-  puts "Enter your choice 1 - 6 or quit"
+  puts "Enter your choice 1 - 7 or quit"
   choice = gets.chomp
-  break if choice.upcase == "QUIT"
+  if choice.upcase == "QUIT"
+    tree.store_bst
+    break
+  end
 
   puts dash
   puts star
@@ -66,6 +81,10 @@ loop do
     puts "Enter an element to remove"
     element = gets.chomp.to_i
     tree.remove(element)
+
+  when "7"
+    puts "All the paths from the root to leaf node are:"
+    tree.print_all_paths
 
   else
     puts "Enter valid choice"

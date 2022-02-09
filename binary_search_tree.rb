@@ -143,5 +143,67 @@ class BinarySearchTree
   def remove(element)
     @root = remove_element(element, @root)
   end
+
+  def print_all_paths(node = @root, path = "")
+    if node.nil?
+      return
+    elsif node.left_node.nil? && node.right_node.nil?
+      puts "#{path}->#{node.value}"
+    else
+      print_all_paths(node.left_node, path + "->#{node.value}")
+      print_all_paths(node.right_node, path + "->#{node.value}")
+    end
+  end
+
+  def store_bst
+    node = @root
+    output = []
+    if node
+      queue = []
+      queue << node
+      output << node.value
+      until queue.empty?
+        node = queue.shift
+        if node.left_node
+          queue << node.left_node
+          output << node.left_node.value
+        else
+          output << -1
+        end
+        if node.right_node
+          queue << node.right_node
+          output << node.right_node.value
+        else
+          output << -1
+        end
+      end
+    else
+      output << -1
+    end
+    File.write("bst.txt", output.join("->"))
+  end
+
+  def load_bst
+    input = File.read("bst.txt").split("->").map(&:to_i)
+    unless input.first == -1
+      queue = []
+      @root = Node.new(input.first)
+      node = @root
+      itr = 1
+      queue << node
+      until itr >= input.size
+        node = queue.shift
+        unless input[itr] == -1
+          node.left_node = Node.new(input[itr])
+          queue << node.left_node
+        end
+        unless input[itr + 1] == -1
+          node.right_node = Node.new(input[itr + 1])
+          queue << node.right_node
+        end
+        itr += 2
+      end
+    end
+  end
 end
 
