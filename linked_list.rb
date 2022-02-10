@@ -13,7 +13,7 @@ class LinkedList
       @head = new_node
     else
       current = @head
-      until current.next_node.nil?
+			while current.next_node
           current = current.next_node
       end
       current.next_node = new_node
@@ -21,18 +21,13 @@ class LinkedList
   end
 
   def add_elements(elements)
-    if elements.size
-      elements.each { |element| add_node(element) }
-    end
+  	elements.each { |element| add_node(element) }
   end
 
   def search_element(element, node = @head)
     if node
-      if element == node.value
-        return true
-      else
-        return search_element(element, node.next_node)
-      end
+      return true if element == node.value
+      return search_element(element, node.next_node)
     else
       return false
     end
@@ -42,50 +37,51 @@ class LinkedList
     if node
       if node.value == element
         @head = node.next_node
-        return
+        return true
       end
       parent = node
       node = node.next_node
       child = nil
-      until node.nil?
+			while node
         if node.value == element
           child = node.next_node
           parent.next_node = child
-          return
+          return true
         else
           parent = node
           node = node.next_node
         end
       end
     end
+		return false
   end
 
   def print_linked_list(node = @head, path = "")
-    if node.nil?
-      return
-    elsif node.next_node.nil?
-      puts "#{path}->#{node.value}"
-    else
-      print_linked_list(node.next_node, path + "->#{node.value}")
-    end
+    return if node.nil?
+    if node.next_node 
+			print_linked_list(node.next_node, path + "->#{node.value}")
+		else
+			puts "#{path}->#{node.value}"
+		end
   end
 
   def reverse_linked_list
     parent = nil
     node = @head
-    until node.nil?
+		while node
       child = node.next_node
       node.next_node = parent
       parent = node
       node = child
     end
     @head = parent
+		puts "Linked List Reversed Successfully"
   end
 
   def store_linked_list
     node = @head
     output = []
-    until node.nil?
+		while node
       output << node.value
       node = node.next_node
     end

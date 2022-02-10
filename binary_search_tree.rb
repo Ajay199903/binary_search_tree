@@ -14,35 +14,22 @@ class BinarySearchTree
     else
       parent = nil
       current = @root
-      until current.nil?
+      while current
         parent = current
-        if element < current.value
-          current = current.left_node
-        else
-          current = current.right_node
-        end
+        current = element < current.value ? current.left_node : current.right_node
       end
-      if element < parent.value
-        parent.left_node = new_node
-      else
-        parent.right_node = new_node
-      end
+      element < parent.value ? parent.left_node = new_node : parent.right_node = new_node
     end
   end
 
   def add_elements(elements)
-    if elements.size
       elements.each { |element| add_node(element) }
-    end
   end
 
   def largest_element(node = @root)
     if node
-      if node.right_node
-        largest_element(node.right_node)
-      else
-        return node.value
-      end
+      return largest_element(node.right_node) if node.right_node
+      return node.value
     else
       return nil
     end
@@ -50,11 +37,8 @@ class BinarySearchTree
 
   def smallest_element(node = @root)
     if node
-      if node.left_node
-        smallest_element(node.left_node)
-      else
-        return node.value
-      end
+      return smallest_element(node.left_node) if node.left_node
+      return node.value
     else
       return nil
     end
@@ -86,31 +70,29 @@ class BinarySearchTree
 
   def level_order_traversal
     node = @root
-    if node
-      queue = []
-      queue << node
-      until queue.empty?
-        node = queue.shift
-        puts " #{node.value} "
-        if node.left_node
-          queue << node.left_node
-        end
-        if node.right_node
-          queue << node.right_node
-        end
-      end
-    end
+		# if node is required because [nil] is considered not empty
+		if node
+    	queue = []
+    	queue << node
+			# Negation required because queue = [] is considered true value
+    	until queue.empty?
+      	node = queue.shift
+      	puts " #{node.value} "
+      	if node.left_node
+        	queue << node.left_node
+      	end
+      	if node.right_node
+        	queue << node.right_node
+      	end
+    	end
+		end
   end
 
   def search_element(element, node = @root)
     if node
-      if element < node.value
-        return search_element(element, node.left_node)
-      elsif element > node.value
-        return search_element(element, node.right_node)
-      else
-        return true
-      end
+      return search_element(element, node.left_node) if element < node.value
+      return search_element(element, node.right_node) if element > node.value
+      return true
     else
       return false
     end
@@ -118,41 +100,41 @@ class BinarySearchTree
 
   def remove_element(element, node = @root)
     if node
+			found = false
       if element < node.value
-        node.left_node = remove_element(element, node.left_node)
+        node.left_node, found = remove_element(element, node.left_node)
       elsif element > node.value
-        node.right_node = remove_element(element, node.right_node)
+        node.right_node, found  = remove_element(element, node.right_node)
       else
-        if node.left_node != nil && node.right_node != nil
+				found = true
+        if node.left_node && node.right_node
           min_right = smallest_element(node.right_node)
           node.value = min_right
-          node.right_node = remove_element(min_right, node.right_node)
-        elsif node.left_node != nil
+          node.right_node, found = remove_element(min_right, node.right_node)
+        elsif node.left_node
           node = node.left_node
-        elsif node.right_node != nil
+        elsif node.right_node
           node = node.right_node
         else
           node = nil
         end
       end
-      return node
+      return node, found
     end
-    return nil
+    return nil, false
   end
 
   def remove(element)
-    @root = remove_element(element, @root)
+    @root, found = remove_element(element, @root)
+		puts "#{element} deleted from BST" if found
+		puts "#{element} not found in BST" if !found
   end
 
   def print_all_paths(node = @root, path = "")
-    if node.nil?
-      return
-    elsif node.left_node.nil? && node.right_node.nil?
-      puts "#{path}->#{node.value}"
-    else
-      print_all_paths(node.left_node, path + "->#{node.value}")
-      print_all_paths(node.right_node, path + "->#{node.value}")
-    end
+    return if node.nil?
+    print_all_paths(node.left_node, path + "->#{node.value}") if node.left_node
+    print_all_paths(node.right_node, path + "->#{node.value}") if node.right_node
+		puts "#{path}->#{node.value}"  if node.left_node.nil? && node.right_node.nil?
   end
 
   def store_bst
