@@ -69,24 +69,18 @@ class BinarySearchTree
   end
 
   def level_order_traversal
-    node = @root
-		# if node is required because [nil] is considered not empty
+		node = @root
 		if node
-    	queue = []
-    	queue << node
-			# Negation required because queue = [] is considered true value
-    	until queue.empty?
-      	node = queue.shift
-      	puts " #{node.value} "
-      	if node.left_node
-        	queue << node.left_node
-      	end
-      	if node.right_node
-        	queue << node.right_node
-      	end
-    	end
+			queue = []
+			queue << node
+			until queue.empty?
+				node = queue.shift
+				puts " #{node.value} "
+        queue << node.left_node if node.left_node
+        queue << node.right_node if node.right_node
+			end
 		end
-  end
+	end
 
   def search_element(element, node = @root)
     if node
@@ -173,7 +167,7 @@ class BinarySearchTree
       node = @root
       itr = 1
       queue << node
-      until itr >= input.size
+      while itr < input.size
         node = queue.shift
         unless input[itr] == -1
           node.left_node = TreeNode.new(input[itr])
