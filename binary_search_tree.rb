@@ -69,18 +69,18 @@ class BinarySearchTree
   end
 
   def level_order_traversal
-		node = @root
-		if node
-			queue = []
-			queue << node
-			until queue.empty?
-				node = queue.shift
-				puts " #{node.value} "
+    node = @root
+    if node
+      queue = []
+      queue << node
+      until queue.empty?
+        node = queue.shift
+        puts " #{node.value} "
         queue << node.left_node if node.left_node
         queue << node.right_node if node.right_node
-			end
-		end
-	end
+      end
+    end
+  end
 
   def search_element(element, node = @root)
     if node
@@ -94,13 +94,13 @@ class BinarySearchTree
 
   def remove_element(element, node = @root)
     if node
-			found = false
+      found = false
       if element < node.value
         node.left_node, found = remove_element(element, node.left_node)
       elsif element > node.value
         node.right_node, found  = remove_element(element, node.right_node)
       else
-				found = true
+        found = true
         if node.left_node && node.right_node
           min_right = smallest_element(node.right_node)
           node.value = min_right
@@ -120,15 +120,15 @@ class BinarySearchTree
 
   def remove(element)
     @root, found = remove_element(element, @root)
-		puts "#{element} deleted from BST" if found
-		puts "#{element} not found in BST" if !found
+    puts "#{element} deleted from BST" if found
+    puts "#{element} not found in BST" if !found
   end
 
   def print_all_paths(node = @root, path = "")
     return if node.nil?
     print_all_paths(node.left_node, path + "->#{node.value}") if node.left_node
     print_all_paths(node.right_node, path + "->#{node.value}") if node.right_node
-		puts "#{path}->#{node.value}"  if node.left_node.nil? && node.right_node.nil?
+    puts "#{path}->#{node.value}"  if node.left_node.nil? && node.right_node.nil?
   end
 
   def store_bst

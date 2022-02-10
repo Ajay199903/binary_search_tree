@@ -50,13 +50,13 @@ loop do
   puts "Enter your choice 1 - 12 or quit"
   choice = gets.chomp
   if choice.upcase == "QUIT"
-		puts "Storing the bst into the file"
+    puts "Storing the bst into the file"
     tree.store_bst
-		puts "Storing of bst successful"
-		puts "Storing the linked list into the file"
+    puts "Storing of bst successful"
+    puts "Storing the linked list into the file"
     linked_list.store_linked_list
-		puts "Storing of linked list successful"
-		puts "Quitting!"
+    puts "Storing of linked list successful"
+    puts "Quitting!"
     break
   end
 
@@ -124,10 +124,10 @@ loop do
     puts "Enter an element to remove from linked list"
     element = gets.chomp.to_i
     if linked_list.remove_element(element)
-			puts "#{element} removed from the linked list"
-		else
-			puts "#{element} not found in the linked list"
-		end
+      puts "#{element} removed from the linked list"
+    else
+      puts "#{element} not found in the linked list"
+    end
 
   when "11"
     puts "Reversing the linked list"

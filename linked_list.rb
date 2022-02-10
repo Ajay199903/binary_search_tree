@@ -13,7 +13,7 @@ class LinkedList
       @head = new_node
     else
       current = @head
-			while current.next_node
+      while current.next_node
           current = current.next_node
       end
       current.next_node = new_node
@@ -21,7 +21,7 @@ class LinkedList
   end
 
   def add_elements(elements)
-  	elements.each { |element| add_node(element) }
+    elements.each { |element| add_node(element) }
   end
 
   def search_element(element, node = @head)
@@ -42,7 +42,7 @@ class LinkedList
       parent = node
       node = node.next_node
       child = nil
-			while node
+      while node
         if node.value == element
           child = node.next_node
           parent.next_node = child
@@ -53,35 +53,35 @@ class LinkedList
         end
       end
     end
-		return false
+    return false
   end
 
   def print_linked_list(node = @head, path = "")
     return if node.nil?
     if node.next_node 
-			print_linked_list(node.next_node, path + "->#{node.value}")
-		else
-			puts "#{path}->#{node.value}"
-		end
+      print_linked_list(node.next_node, path + "->#{node.value}")
+    else
+      puts "#{path}->#{node.value}"
+    end
   end
 
   def reverse_linked_list
     parent = nil
     node = @head
-		while node
+    while node
       child = node.next_node
       node.next_node = parent
       parent = node
       node = child
     end
     @head = parent
-		puts "Linked List Reversed Successfully"
+    puts "Linked List Reversed Successfully"
   end
 
   def store_linked_list
     node = @head
     output = []
-		while node
+    while node
       output << node.value
       node = node.next_node
     end
