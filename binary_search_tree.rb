@@ -30,8 +30,6 @@ class BinarySearchTree
     if node
       return largest_element(node.right_node) if node.right_node
       return node.value
-    else
-      return nil
     end
   end
 
@@ -39,8 +37,6 @@ class BinarySearchTree
     if node
       return smallest_element(node.left_node) if node.left_node
       return node.value
-    else
-      return nil
     end
   end
 
