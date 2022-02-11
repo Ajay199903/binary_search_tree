@@ -11,8 +11,7 @@ dash = ''
 end 
 
 puts star
-puts "Do you want to load the bst from the file"
-puts "Enter y or Y for yes otherwise it will be considered no"
+puts "Press y or Y to load the bst and linked list from the file"
 choice = gets.chomp
 if choice.upcase == "Y"
   puts "Loading the BST"
